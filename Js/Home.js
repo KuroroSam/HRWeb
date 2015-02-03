@@ -1,6 +1,10 @@
 ﻿/// <reference path="ko.js" />
 /// <reference path="Jquery.js" />
 
+
+//http://localhost:1949/
+//https://api.github.com/repos/knockout/knockout/stargazers
+//https://api.github.com/repos/appcelerator/titanium_mobile/stargazers
 var userModel = function () {
 
     //extra field
@@ -13,6 +17,7 @@ var homeViewModel = function () {
     self.Users = ko.observableArray([]);
     self.TotalCount = ko.observable(0);
     self.LocationText = ko.observable('');
+    self.LanguageText = ko.observable('');
 
     //Local Storage
     self.UserDetails = ko.observableArray([]);
@@ -44,11 +49,16 @@ var homeViewModel = function () {
         var options = {
             data: {
                 page: self.PageNo(),
-                per_page: self.ItemPerPage()
+                per_page: self.ItemPerPage
             }
-
         };
-        $.ajax('https://api.github.com/search/users?q=+location:' + self.LocationText(), options).done(function (data) {
+
+        //hack way
+        var q = 'q=+location:"' + self.LocationText() + '"';
+        if (self.LanguageText()) {
+            q += '+language:' + self.LanguageText();
+        }
+        $.ajax('https://api.github.com/search/users?' + q, options).done(function (data) {
             self.Users(data.items);
             self.TotalCount(data.total_count);
         });
@@ -84,6 +94,12 @@ var homeViewModel = function () {
         // Put the object into storage
         localStorage.setItem('HRWeb', JSON.stringify(self.ShortList()));
 
+    }
+
+    self.LanguageClick = function(data,e)
+    {
+        var text = $(e.target).closest('li').text();
+        self.LanguageText(text);
     }
 
     self.showUserDetailsClick = function(date,e)

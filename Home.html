@@ -47,6 +47,25 @@
                     <div class="form-group">
                         <input data-bind="value:LocationText" type="text" class="form-control" placeholder="Location">
                     </div>
+                
+
+                    <div class="input-group">
+                        <input data-bind="value:LanguageText" type="text" class="form-control" placeholder="Language">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" data-bind="click:LanguageClick">
+                                <li><a href="#">Javascript</a></li>
+                                <li><a href="#">C#</a></li>
+                                <li><a href="#">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Objective-C</a></li>
+                                <li><a href="#">Swift</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Java</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+
                     <button class="btn btn-primary" data-bind="click:SearchClick">Search</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
