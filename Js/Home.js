@@ -54,9 +54,9 @@ var homeViewModel = function () {
         };
 
         //hack way
-        var q = 'q=+location:"' + self.LocationText() + '"';
+        var q = 'q=+location:"' + encodeURIComponent(self.LocationText()) + '"';
         if (self.LanguageText()) {
-            q += '+language:' + self.LanguageText();
+            q += '+language:"' + encodeURIComponent(self.LanguageText()) + '"';
         }
         $.ajax('https://api.github.com/search/users?' + q, options).done(function (data) {
             self.Users(data.items);
@@ -120,6 +120,12 @@ var homeViewModel = function () {
         localStorage.setItem('HRWeb_UserDetails', JSON.stringify(self.UserDetails()));
         localStorage.setItem('HRWeb', JSON.stringify(self.ShortList()));
 
+    }
+
+    self.deleteAllShorListedClick = function(data,e)
+    {
+        localStorage.setItem('HRWeb_UserDetails', JSON.stringify([]));
+        localStorage.setItem('HRWeb', JSON.stringify([]));
     }
 }
 
